@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connecto</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    
+    <div class="page-container">
+        <!-- Header -->
+        <header class="header py-3">
+            <div class="container d-flex justify-content-between align-items-center">
+                <h1 class="mb-0">Connecto</h1>
+                <div class="search-bar d-flex align-items-center">
+                    <input type="text" class="form-control mr-2" placeholder="Pesquisar" id="campo-pesquisa">
+                    <button class="btn btn-primary">Buscar</button>
+                </div>
+                <div id="login-info" class="d-flex align-items-center">
+                    <button id="login-btn" class="btn btn-primary">Login</button>
+                </div>
+            </div>
+        </header>
+        
+        <!-- Main Content -->
+        <main class="container my-4">
+            <div class="row">
+                <!-- Sidebar Esquerda -->
+                <aside class="col-md-3 mb-4 sidebar-left">
+                    <div class="sidebar bg-light rounded p-3">
+                        <h5 class="font-weight-bold">Menu</h5>
+                        <div id="user-info" class="d-flex flex-column align-items-start">
+                            <img src="https://via.placeholder.com/50" alt="Avatar" class="rounded-circle user-photo mb-2" id="user-photo">
+                            <div id="user-dropdown" class="dropdown-menu mt-2">
+                                <a href="#" class="dropdown-item" id="post-btn">Postar</a>
+                                <a href="#" id="minhas-postagens-link" class="dropdown-item">Minhas Postagens</a>
+                            <a href="#" class="dropdown-item" id="edit-profile-btn">Editar Perfil</a>                                
+                                <a href="#" class="dropdown-item">Mensagens</a>
+                                <a href="#" class="dropdown-item">Notificações</a>
+                                <a href="#" class="dropdown-item">Configurações</a>
+                                <a href="#" class="dropdown-item" id="logout-btn">Sair</a>
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+                
+                <!-- Feed de Postagens -->
+                <div class="col-md-6">
+                    <section id="posts-section">     
+                        <!-- Exemplo de um card de postagem -->
+                        <div class="post">
+                            <div class="post-header">
+                                <img src="https://via.placeholder.com/50" alt="Avatar" class="rounded-circle">
+                                <div>
+                                    <span class="username">Nome do Usuário</span>
+                                    <span class="date">Data da Postagem</span>
+                                </div>
+                            </div>
+                            <div class="post-content">
+                                Conteúdo da postagem...
+                            </div>
+                            <img src="https://via.placeholder.com/500" alt="Post Image" class="post-image">
+                            <div class="post-actions" style="display: flex; align-items: center;">
+                                <div class="post-actions">
+                                    
+                                                                      
+                                  </div>
+                            </div>
+                              
+                        </div>
+                    </section>
+                </div>
+                
+                <!-- Sidebar Direita -->
+                <aside class="col-md-3 mb-4 sidebar-right">
+                    <div class="sidebar bg-light rounded p-3">
+                        <h5 class="font-weight-bold">Sugestões</h5>
+                        <!-- Conteúdo adicional aqui -->
+                    </div>
+                </aside>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer text-dark py-3 text-center">
+            <p class="mb-0">&copy; 2024 - Connecto. Todos os Direitos Reservados.</p>
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
+    <script type="module" src="app.js"></script>
+</body>
+</html>

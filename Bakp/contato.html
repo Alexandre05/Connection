@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criar Postagem</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f9;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+
+        form {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <h1>Crie sua postagem</h1>
+    <form id="formPostagem">
+        <label for="titulo">Título:</label>
+        <input type="text" id="titulo" name="titulo" placeholder="Digite o título da sua postagem" required>
+
+        <label for="conteudo">Conteúdo:</label>
+        <textarea id="conteudo" name="conteudo" rows="10" placeholder="Escreva o conteúdo da sua postagem" required></textarea>
+
+        <button type="submit">Publicar</button>
+    </form>
+
+    <script>
+        // Script básico para captura do evento de envio do formulário
+        document.getElementById('formPostagem').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const titulo = document.getElementById('titulo').value;
+            const conteudo = document.getElementById('conteudo').value;
+            alert(`Título: ${titulo}\nConteúdo: ${conteudo}`);
+            // Aqui você pode adicionar a lógica de envio para o backend ou exibir a postagem na página
+        });
+    </script>
+</body>
+</html>

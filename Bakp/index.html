@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+
+</script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cidade do Sol</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+   
+
+    <!-- Cabeçalho com título, navegação e pesquisa -->
+     <section>
+    <header>        
+        <h1>Portal Cidade do Sol</h1>
+        <nav>
+            <ul class="tabs">
+                <li><a href="#" class="tab-link active" data-tab="tab1">Home</a></li>
+                <li><a href="#" class="tab-link" data-tab="tab2">Notícias Da Cidade</a></li>
+                <li><a href="#" class="tab-link" data-tab="tab2">Notícias Em Geral</a></li>
+                <li><a href="contato.html" class="tab-link" data-tab="tab3">Contato</a></li>
+        
+                <li class="dropdown">
+                    <a href="#" id="dropdownToggle" class="dropdown-toggle tab-link" data-tab="tab2" aria-expanded="false">Opções</a>
+                    <ul class="dropdown-menu">
+                      <li><a href="paginaLogin.html" class="tab-link" data-tab="tab2">Login/Cadastro</a></li>
+                      
+                      <li><a href="paginaPerfil.html" class="tab-link" data-tab="tab2">Perfil</a></li>
+                    </ul>
+                  </li>
+                  
+                  
+            </ul>
+        </nav>
+        <div class="buscar">
+            <input type="text" placeholder="Pesquisar no site"
+            id="campo-pesquisa">
+            <button onclick="pesquisar()"> Buscar Noticia</button>
+            
+        </div>
+        
+    </header>
+     </section>
+ <!-- Conteúdo Principal -->
+  <main>
+   
+    <section class="resultados-pesquisa"
+    id="resultados-pesquisa">
+    
+        
+   </section>
+       
+    
+      
+    
+</main>
+    <!-- Rodapé -->
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2024 - Portal Cidade do Sol. Todos os Direitos Reservados.</p>
+            <nav class="footer-nav">
+                <ul>
+                    <li><a href="#">Política de Privacidade</a></li>
+                    <li><a href="#">Termos de Uso</a></li>
+                    <li><a href="#">Desenvolvedor</a></li>
+                    <li><a href="#">Entre em Contato</a></li>
+                </ul>
+            </nav>
+        </div>
+    </footer>
+    <script src="dados.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

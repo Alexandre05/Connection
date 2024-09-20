@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Novo Usuário</title>
+    
+    <style>
+        /* Estilos gerais para centralização e responsividade */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 10px; /* Espaço para telas pequenas */
+            box-sizing: border-box;
+        }
+
+        .register-container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+            box-sizing: border-box;
+        }
+
+        .register-container h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+            font-size: 1.8rem;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        .form-group input,
+        .form-group select {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+            box-sizing: border-box;
+            width: 100%;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: #007BFF;
+            outline: none;
+        }
+
+        .register-button {
+            background-color: #007BFF;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100%;
+        }
+
+        .register-button:hover {
+            background-color: #0056b3;
+        }
+
+        .form-footer {
+            margin-top: 15px;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        .form-footer a {
+            color: #007BFF;
+            text-decoration: none;
+        }
+
+        .form-footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Ajustes de responsividade */
+        @media (max-width: 480px) {
+            .register-container {
+                padding: 15px;
+            }
+
+            .register-container h1 {
+                font-size: 1.5rem;
+            }
+
+            .register-button {
+                font-size: 0.9rem;
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="register-container">
+        <h1>Criar Nova Conta</h1>
+        <form id="register-form" onsubmit="generateTxt(); return false;"> <!-- return false para evitar o reload da página -->
+            <div class="form-group">
+                <label for="fullname">Nome Completo:</label>
+                <input type="text" id="fullname" name="fullname" placeholder="Digite seu nome completo" required>
+            </div>
+        
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" placeholder="Digite seu email" required>
+            </div>
+        
+            <div class="form-group">
+                <label for="password">Senha:</label>
+                <input type="password" id="password" name="password" placeholder="Digite uma senha" required>
+            </div>
+        
+            <div class="form-group">
+                <label for="confirm-password">Confirmar Senha:</label>
+                <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirme sua senha" required>
+            </div>
+        
+            <div class="form-group">
+                <label for="phone">Telefone:</label>
+                <input type="tel" id="phone" name="phone" placeholder="(99) 99999-9999">
+            </div>
+        
+            <div class="form-group">
+                <label for="birthdate">Data de Nascimento:</label>
+                <input type="date" id="birthdate" name="birthdate" required>
+            </div>
+        
+            <div class="form-group">
+                <label for="gender">Gênero:</label>
+                <select id="gender" name="gender" required>
+                    <option value="" disabled selected>Selecione</option>
+                    <option value="male">Masculino</option>
+                    <option value="female">Feminino</option>
+                    <option value="other">Outro</option>
+                </select>
+            </div>
+        
+            <button type="submit" class="register-button">Cadastrar</button>
+        </form>
+    </div>
+
+</body>
+</html>

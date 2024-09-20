@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Novo Usuário</title>
+    <!-- Adiciona o Bootstrap CSS para estilos pré-definidos e responsivos -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+   
+</head>
+<body>
+    
+
+
+    <!-- Container para centralizar o formulário na página -->
+    <div class="container d-flex justify-content-center align-items-center min-vh-100">
+        <div class="register-container">
+            <h1 class="text-center mb-4">Criar Nova Conta</h1>
+             <!-- Área de status de conexão -->
+     <div id="firebase-status" class="alert" role="alert" style="display:none;"></div>
+            <!-- Formulário de cadastro -->
+            <form id="register-form">
+                <div class="form-group">
+                    <label for="fullname">Nome Completo:</label>
+                    <input type="text" class="form-control" id="fullname" name="fullname" placeholder="Digite seu nome completo" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="Digite seu email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Senha:</label>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Digite uma senha" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirm-password">Confirmar Senha:</label>
+                    <input type="password" class="form-control" id="confirm-password" name="confirm-password" placeholder="Confirme sua senha" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Telefone:</label>
+                    <input type="tel" class="form-control" id="phone" name="phone" placeholder="(99) 99999-9999">
+                </div>
+
+                <div class="form-group">
+                    <label for="birthdate">Data de Nascimento:</label>
+                    <input type="date" class="form-control" id="birthdate" name="birthdate" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="gender">Gênero:</label>
+                    <select id="gender" name="gender" class="form-control" required>
+                        <option value="" disabled selected>Selecione</option>
+                        <option value="male">Masculino</option>
+                        <option value="female">Feminino</option>
+                        <option value="other">Outro</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block">Cadastrar</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Adiciona o Bootstrap e o Popper.js JS para funcionalidade do Bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    
+
+    <!-- Inclui o script do app.js -->
+    <script type="module" src="app.js"></script> 
+</body>
+</html>

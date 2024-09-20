@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minhas Postagens</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    
+<body>
+    <div class="container mt-4">
+        <h2 class="mb-4">Minhas Postagens</h2>
+        
+        <div id="posts-section">
+            <!-- Aqui serão exibidas as postagens carregadas via JavaScript -->
+        </div>
+    </div>
+
+    <!-- Importa o arquivo JavaScript que contém a função displayPosts -->
+    <script type="module" src="firebase.js"></script>
+    <!-- Modal HTML -->
+<div id="editPostModal" class="modal" style="display: none;">
+    <div class="modal-content">
+      <span id="closeModal" class="close">&times;</span>
+      <h2>Editar Postagem</h2>
+      <form id="editPostForm">
+        <div class="form-group">
+          <label for="editTitle">Título</label>
+          <input type="text" id="editTitle" class="form-control">
+        </div>
+        <div class="form-group">
+          <label for="editContent">Conteúdo</label>
+          <textarea id="editContent" class="form-control"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="editImageUrl">URL da Imagem</label>
+          <input type="text" id="editImageUrl" class="form-control">
+        </div>
+        <button type="button" id="savePostChanges" class="btn btn-success">Salvar</button>
+        <button type="button" id="cancelEdit" class="btn btn-secondary">Cancelar</button>
+      </form>
+    </div>
+  </div>
+  
+  <style>
+    /* Estilos simples para o modal */
+    .modal {
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5); /* Fundo opaco */
+      display: none; /* Inicialmente escondido */
+    }
+  
+    .modal-content {
+      background-color: #fff;
+      margin: 15% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%; /* Largura do modal */
+      max-width: 500px;
+    }
+  
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+  
+    .close:hover,
+    .close:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    /* Modal Responsivo */
+.modal {
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Fundo opaco */
+  display: none; /* Inicialmente escondido */
+  justify-content: center; /* Centraliza horizontalmente */
+  align-items: center; /* Centraliza verticalmente */
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 90%; /* Ajuste para telas pequenas */
+  max-width: 500px; /* Tamanho máximo */
+  position: relative; /* Necessário para o arrastar */
+  cursor: move; /* Muda o cursor para indicar que o modal pode ser arrastado */
+}
+
+/* Para telas muito pequenas */
+@media (max-width: 600px) {
+  .modal-content {
+    width: 100%; /* Preencher toda a largura da tela */
+    max-width: 100%; /* Remove limite de largura */
+    padding: 10px; /* Reduz o espaçamento interno */
+  }
+}
+
+.close {
+  color: #aaa;
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+  </style>  
+
+    <script>
+        // Quando o DOM estiver totalmente carregado, chama a função displayPosts
+        document.addEventListener('DOMContentLoaded', function () {
+            displayPosts(); // Chama a função que exibe as postagens
+        });
+    </script>
+</body>
+</html>

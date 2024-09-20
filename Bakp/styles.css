@@ -1,0 +1,444 @@
+/* Reinicie de estilos (opcional) */
+/* @import url('https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.css'); */
+
+/* Estilos Gerais da página */
+body {
+  margin: 0; /* Remove default margin */
+  font-family: Arial, sans-serif; /* Default font */
+  background-color: #f5f5f5; /* Light background for better contrast */
+  
+}
+
+/* Estilo do Header cabeçalho da página */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
+  background: linear-gradient(to right, #007BFF, #006400); /* Degrade */
+  padding: 10px 20px;
+  color: #fff; /* White text */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  
+  box-shadow: 0 2px 5px rgba(4, 93, 167, 0.1);
+}
+
+@media (max-width: 768px) { /* Ajustar a largura conforme necessário */
+  #menu-toggle {
+    display: block;
+  }
+  #nav-menu {
+    display: none; /* Esconder o menu por padrão em telas menores */
+  }
+  #nav-menu.active {
+    display: block;
+  }
+}
+
+/* Estilo para o Menu de Navegação */
+.tabs {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 10px;
+}
+
+.tab-link {
+  padding: 11px 15px;
+  border: 2px solid #00050a;
+  border-radius: 8px;
+  color: #f2f5f8;
+  text-decoration: none;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.tab-link:hover {
+  background-image: linear-gradient(to right, #f1eded, #faf6f6);
+  color: #3108c5;
+}
+
+.tab-link.active {
+  box-shadow: inset 0px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Estilo para o Container de Pesquisa (opcional) */
+.search-container {
+  display: flex; /* Remove for a cleaner header */
+  align-items: center;
+  gap: 5px;
+  border: 1px solid #ccc;
+  padding: 5px;
+  margin-bottom: 20px; /* Add space if search is included */
+}
+
+.search-container input[type="text"] {
+  flex: 1;
+  border: none;
+  padding: 10px;
+}
+
+.search-container button {
+  background: none;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  color: #fff;
+}
+
+/* Estilo do Main para o conteúdo principal */
+main {
+  min-height: calc(100vh - 80px); /* Adjusted height for header */
+  padding-bottom: 100px; /* Space for footer */
+  display: flex; /* For side-by-side layout (optional) */
+  flex-wrap: wrap; /* Wrap content if needed */
+}
+
+section {
+  background-color: #f0f0f0;
+  padding: 20px;
+  
+}
+h2 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+.login-area {
+  float: right; /* Posiciona a área de login à direita */
+  margin-left: 20px; /* Adiciona um espaçamento à esquerda para melhor visualização */
+}
+/* Estilo dos Artigos de Notícias */
+.news-article {
+  width: calc(33% - 20px); /* 33% width with margin */
+  border: 1px solid #ddd;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  background-color: #fff;
+  box-shadow: 0 4px 12px rgba(74, 2, 107, 0.1);
+  margin-right: 20px; /* Margin for spacing */
+}
+
+.article-title {
+  font-size: 1.8rem; /* Adjust font size */
+  margin-bottom: 15px;
+  color: #010c18; /* Blue */
+}
+
+.article-meta {
+  font-size: 0.9em;
+  color: #666;
+  margin-bottom: 15px;
+}
+
+.article-image {
+  max-width: 100%;
+  height: auto;
+  max-height: 250px; /* Example: Limit maximum height */
+}
+footer {
+  background-color: #f0f0f0;
+  padding: 20px;
+  text-align: center;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+}
+
+.footer-nav ul {
+  list-style: none;
+  display: flex;
+}
+
+.footer-nav li {
+  margin-right: 10px;
+}
+
+.footer-social {
+  display: flex;
+}
+
+.footer-social a {
+  margin-right: 10px;
+}
+
+/* Estilos para o menu */
+#nav-menu {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 0; /* Initially hidden */
+  background-image: linear-gradient(to bottom,#007BFF, #006400);
+  overflow: hidden;
+  transition: all 0.3s ease-in-out;
+  z-index: 999;
+}
+
+/* Estilo para mostrar o menu */
+#nav-menu.show {
+  height: 300px;
+}
+
+label, input, button {
+  margin: 10px 0; /* Adiciona um espaçamento entre os elementos */
+}
+
+.dropdown-menu {
+  display: none; /* Esconde o submenu por padrão */
+  position: absolute;
+  background-color: #05044d;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  list-style: none; /* Para remover os pontos das listas */
+  padding: 0; /* Remover padding padrão */
+  margin: 0; /* Remover margin padrão */
+}
+
+.dropdown-menu li {
+  padding: 8px 16px;
+}
+
+.dropdown-menu.show {
+  display: block; /* Classe que será adicionada via JavaScript para mostrar o submenu */
+}
+
+/* Estilo para os links dos itens de menu, incluindo o link "Opções" */
+.tab-link {
+  display: block;
+  padding: 11px 15px; /* Mantém o padding consistente */
+  border: 2px solid #00050a; /* Mantém a borda dos links */
+  border-radius: 8px; /* Bordas arredondadas */
+  color: #f2f5f8; /* Cor do texto */
+  text-decoration: none;
+  transition: background-color 0.3s, color 0.3s; /* Efeitos de transição */
+}
+
+.tab-link:hover {
+  background-image: linear-gradient(to  #f80505);
+  color: #f80505; /* Cor do texto ao passar o mouse */
+}
+
+.tab-link.active {
+  box-shadow: inset 0px 2px 4px rgba(0, 0, 0, 0.3); /* Efeito de sombra ao clicar */
+}
+
+/* Ajuste de estilo para o menu dropdown */
+.dropdown-toggle {
+  /* Aqui você pode adicionar estilos específicos para o link "Opções" se necessário */
+  cursor: pointer; /* Garante que o cursor de ponteiro apareça */
+}
+
+.dropdown-menu {
+  display: none; /* Esconde o submenu por padrão */
+  position: absolute;
+  background-color: #06b2e6; /* Fundo branco */
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2); /* Sombra do submenu */
+  z-index: 1; /* Garante que o submenu fique acima de outros elementos */
+  list-style: none; /* Remove as bolinhas das listas */
+  padding: 0; /* Remove padding padrão */
+  margin: 0; /* Remove margin padrão */
+  border-radius: 8px; /* Bordas arredondadas para o submenu */
+}
+
+.dropdown-menu li {
+  padding: 8px 16px; /* Espaçamento interno dos itens do submenu */
+}
+
+.dropdown-menu.show {
+  display: block; /* Mostra o submenu ao clicar */
+}
+/* Estilos para a área de login */
+.login-container {
+  display: flex;
+  flex-direction: column; /* Organiza os elementos em coluna */
+  align-items: center; /* Centraliza horizontalmente */
+  justify-content: center; /* Centraliza verticalmente */
+  min-height: 100vh; /* Ocupa toda a altura da tela */
+  padding: 20px; /* Espaçamento interno */
+  box-sizing: border-box; /* Inclui padding e border no cálculo de largura */
+  background-color: #f0f0f0; /* Fundo para o container */
+}
+
+.login-container h1 {
+  margin-bottom: 20px; /* Espaço abaixo do título */
+  color: #333;
+}
+
+/* Estilo do formulário */
+.login-container form {
+  width: 100%; /* Largura total do form */
+  max-width: 400px; /* Máximo de 400px para telas maiores */
+  background: #fff; /* Fundo branco */
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px; /* Bordas arredondadas */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+/* Estilos para os grupos de formulário */
+.form-group {
+  margin-bottom: 15px; /* Espaço entre os grupos */
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  margin-bottom: 5px; /* Espaço abaixo do label */
+  font-weight: bold;
+  color: #555;
+}
+
+.form-group input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  width: 100%; /* Ajusta o input para ocupar toda a largura do form */
+  box-sizing: border-box;
+}
+
+/* Estilo do botão */
+.login-container button {
+  width: 100%; /* O botão ocupa toda a largura disponível */
+  padding: 10px;
+  background-color: #007BFF; /* Cor de fundo */
+  color: #fff; /* Cor do texto */
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s; /* Transição suave ao passar o mouse */
+}
+
+.login-container button:hover {
+  background-color: #0056b3; /* Escurece o botão ao passar o mouse */
+}
+
+/* Estilos para os links */
+.login-container .links {
+  display: flex;
+  justify-content: space-between; /* Espaço entre os links */
+  margin-top: 10px;
+}
+
+.login-container .links a {
+  color: #007BFF;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.login-container .links a:hover {
+  text-decoration: underline; /* Sublinha ao passar o mouse */
+}
+
+/* Responsividade */
+@media (max-width: 480px) {
+  .login-container form {
+    padding: 15px; /* Ajusta o padding em telas menores */
+  }
+
+  .login-container h1 {
+    font-size: 1.5rem; /* Ajusta o tamanho do título */
+  }
+
+  .login-container button {
+    font-size: 14px; /* Botão menor em telas pequenas */
+  }
+
+  .login-container .links a {
+    font-size: 12px; /* Links menores para caber bem */
+  }
+  
+}
+/* Estilos específicos da tela de criação de postagens *//* Estilos específicos da tela de criação de postagens */
+.postagem-container {
+  max-width: 600px; /* Limita a largura máxima do container */
+  margin: 40px auto; /* Centraliza o container na tela */
+  display: flex;
+
+    
+  padding: 20px; /* Espaçamento interno */
+  background-color: #ffffff; /* Fundo branco */
+  border-radius: 8px; /* Bordas arredondadas */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra para destaque */
+}
+
+.postagem-container  {
+  text-align: center; /* Centraliza o título */
+  color: #333; /* Cor do título */
+  margin-bottom: 20px; /* Espaço abaixo do título */
+  font-size: 24px; /* Tamanho da fonte do título */
+}
+
+/* Estilo do Formulário */
+.postagem-container  {
+  display: flex;
+  flex-direction: column; /* Organiza os itens do formulário em coluna */
+  gap: 15px; /* Espaçamento entre os campos */
+}
+
+.postagem-container  {
+  font-weight: bold; /* Texto em negrito */
+  color: #555; /* Cor do texto dos rótulos */
+}
+
+.postagem-container input[type="text"],
+.postagem-container textarea {
+  padding: 12px; /* Espaçamento interno dos campos */
+  border: 1px solid #ddd; /* Borda cinza clara */
+  border-radius: 6px; /* Bordas arredondadas */
+  font-size: 16px; /* Tamanho da fonte nos campos */
+  background-color: #f9f9f9; /* Fundo dos campos */
+  width: 100%; /* Campos ocupam toda a largura disponível */
+  box-sizing: border-box; /* Inclui o padding e a borda no cálculo da largura */
+}
+
+.postagem-container textarea {
+  min-height: 150px; /* Altura mínima do campo de conteúdo */
+  resize: vertical; /* Permite redimensionamento vertical */
+}
+
+.postagem-container input[type="text"]:focus,
+.postagem-container textarea:focus {
+  border-color: #007bff; /* Muda a cor da borda ao focar */
+  outline: none; /* Remove o contorno padrão */
+  background-color: #fff; /* Fundo branco ao focar */
+}
+
+.postagem-container button {
+  padding: 12px; /* Espaçamento interno do botão */
+  border: none; /* Remove a borda do botão */
+  border-radius: 5px; /* Bordas arredondadas */
+  background-color: #28a745; /* Fundo verde do botão */
+  color: white; /* Texto branco */
+  font-size: 16px; /* Tamanho da fonte do botão */
+  cursor: pointer; /* Cursor de mão ao passar sobre o botão */
+  transition: background-color 0.3s; /* Transição suave da cor ao passar o mouse */
+}
+
+.postagem-container button:hover {
+  background-color: #218838; /* Cor mais escura ao passar o mouse */
+}
+
+/* Responsividade */
+@media (max-width: 480px) {
+  .postagem-container {
+    padding: 15px; /* Reduz o padding em telas menores */
+  }
+
+  .postagem-container h1 {
+    font-size: 1.5rem; /* Ajusta o tamanho do título em telas pequenas */
+  }
+
+  .postagem-container button {
+    font-size: 14px; /* Ajusta o tamanho do botão em telas pequenas */
+    padding: 10px;
+  }
+}
