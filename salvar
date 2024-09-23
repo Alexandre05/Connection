@@ -1,0 +1,365 @@
+
+// Função para encontrar interesses comuns entre dois arrays
+
+function interessesComuns(interessesUsuario, interessesOutro) {
+  
+  // Validação inicial
+  if (!Array.isArray(interessesUsuario) || !Array.isArray(interessesOutro)) {
+      console.error("Os interesses devem ser arrays.");
+      throw new Error("Os interesses devem ser arrays.");
+  }
+
+  // Normalização dos interesses
+  const interessesUsuarioNormalizados = new Set(interessesUsuario.map(i => normalizarInteresse(i)));
+  const interessesOutroNormalizados = new Set(interessesOutro.map(i => normalizarInteresse(i)));
+
+  console.log('Interesses do usuário normalizados:', Array.from(interessesUsuarioNormalizados));
+  console.log('Interesses do outro usuário normalizados:', Array.from(interessesOutroNormalizados));
+
+  // Comparação dos interesses usando Set para encontrar interseções
+  const comuns = Array.from(interessesUsuarioNormalizados).filter(interesse => interessesOutroNormalizados.has(interesse));
+  console.log('Interesses em comum encontrados:', comuns);
+
+  return comuns;
+}
+
+// FUNÇÃO PREPARAR DADOS.
+function prepararDados(usuarios) {
+  
+  
+  // Validação inicial
+  if (!Array.isArray(usuarios) || usuarios.length === 0) {
+    throw new Error("O parâmetro 'usuarios' deve ser um array não vazio.");
+  }
+  console.log("Iniciando a preparação dos dados...");
+
+  // Coleta de interesses únicos
+  const interessesUnicos = Array.from(new Set(
+    usuarios.flatMap(user => {
+      if (!user.interests || !Array.isArray(user.interests)) {
+        console.warn(`Usuário ${user.uid} não possui interesses válidos.`);
+        return [];
+      }
+      const interessesNormalizados = user.interests.map(normalizarInteresse); // Normaliza os interesses
+      console.log(`Interesses normalizados para o usuário ${user.uid}:`, interessesNormalizados);
+      return interessesNormalizados;
+    })
+  ));
+
+  if (interessesUnicos.length < 2) {
+    throw new Error("Deve haver pelo menos dois interesses únicos para realizar one-hot encoding.");
+  }
+
+  console.log('Interesses únicos encontrados:', interessesUnicos);
+
+  const dados = [];
+  const rotulos = []; // Inicializa o array de rótulos
+  const rotulosMap = {};
+  const uidParaIndex = {};
+
+  usuarios.forEach((usuario, index) => {
+    const vetor = interessesUnicos.map(interesse => {
+      const usuarioInterests = usuario.interests ? usuario.interests.map(normalizarInteresse) : [];
+      const valor = usuarioInterests.includes(interesse) ? 1 : 0;
+      console.log(`Usuário ${usuario.uid} - Interesse: ${interesse}, Valor: ${valor}`);
+      return valor;
+    });
+
+    dados.push(vetor);
+    rotulos.push(index); // Adiciona o rótulo aqui
+    rotulosMap[index] = usuario.uid; // Mapeia o índice numérico ao UID
+    uidParaIndex[usuario.uid] = index; // Mapeia o UID ao índice
+  });
+
+  // Adiciona os logs aqui
+  console.log(`Dados gerados: ${dados.length}`);
+  console.log(`Rótulos gerados: ${rotulos.length}`); // Mudei para rotulos.length
+
+  console.log('Rótulos mapeados:', rotulosMap);
+  console.log('Dados para treinamento:', dados);
+  console.log('Mapa de UID para índice:', uidParaIndex);
+
+  console.log("Preparação dos dados concluída.");
+
+  return { dados, rotulos, interessesUnicos, rotulosMap, uidParaIndex }; // Inclui rotulos no retorno
+}  
+// FUNÇÃO MAIN
+
+async function main(uid) {
+  console.log("Antes do main, UID passado para a função main:", uid);
+  console.log("Iniciando a função main...");
+
+  const sugestoesContainer = document.getElementById('sugestoes-container');
+  if (!sugestoesContainer) {
+    console.error("Elemento 'sugestoes-container' não encontrado.");
+    return;
+  }
+
+  const loadingIndicator = document.getElementById('loading-indicator');
+  console.log("Exibindo indicador de carregamento...");
+  toggleLoadingIndicator(loadingIndicator, true);
+
+  try {
+    console.log("Buscando usuários...");
+    const usuarios = await buscarUsuarios();
+    console.log('Usuários encontrados:', usuarios);
+    console.log(`Total de usuários encontrados: ${usuarios.length}`);
+
+    console.log("Filtrando usuários...");
+    const usuariosFiltrados = filtrarUsuarios(usuarios);
+    console.log('Usuários filtrados:', usuariosFiltrados);
+    console.log(`Total de usuários filtrados: ${usuariosFiltrados.length}`);
+
+    if (usuariosFiltrados.length === 0) {
+      console.error("Nenhum usuário com interesses válidos encontrado.");
+      throw new Error("Nenhum usuário com interesses válidos encontrado.");
+    }
+
+    console.log("Preparando dados...");
+    const { dados, rotulos, interessesUnicos, rotulosMap } = prepararDados(usuariosFiltrados);
+    console.log('Dados preparados:', dados);
+    console.log('Rótulos:', rotulos);
+    console.log('Interesses únicos:', interessesUnicos);
+    console.log('Rótulos mapeados:', rotulosMap);
+
+    if (interessesUnicos.length < 2) {
+      console.error("Deve haver pelo menos dois interesses únicos para realizar one-hot encoding.");
+      throw new Error("Deve haver pelo menos dois interesses únicos para realizar one-hot encoding.");
+    }
+
+    console.log("Treinando modelo...");
+    const model = await treinarModelo(dados, rotulos);
+    console.log("Modelo treinado com sucesso.");
+
+    // Obtenha os interesses do usuário atual
+    console.log("Obtendo interesses do usuário com UID:", uid);
+    const usuarioInteresses = await obterInteressesUsuario(uid);
+
+    // Verifique se os interesses do usuário são um array
+    if (!Array.isArray(usuarioInteresses)) {
+      console.error("Os interesses do usuário não são um array.");
+      return;
+    }
+
+    console.log('Interesses do usuário para previsão:', usuarioInteresses);
+
+    // Coletar interesses de outros usuários
+    const outrosInteresses = usuariosFiltrados.flatMap(u => u.interests);
+    console.log('Interesses de outros usuários:', outrosInteresses);
+
+    if (!Array.isArray(outrosInteresses) || outrosInteresses.length === 0) {
+      console.error("Os interesses de outros usuários não são um array válido ou estão vazios.");
+      return;
+    }
+
+    // Encontrar interesses em comum
+    const interessesEmComum = interessesComuns(usuarioInteresses, outrosInteresses);
+    console.log("Interesses em comum encontrados:", interessesEmComum);
+
+    console.log("Prevendo usuários...");
+    const indicesPrevistos = await preverUsuarios(model, interessesEmComum, interessesUnicos, rotulosMap, usuarios);
+    console.log('Índices previstos:', indicesPrevistos);
+
+    const usuariosPrevistos = indicesPrevistos.map(index => rotulosMap[index]);
+    console.log('UIDs previstos:', usuariosPrevistos);
+
+    console.log("Exibindo sugestões...");
+    exibirSugestoes(usuariosPrevistos, rotulosMap, usuarios, sugestoesContainer, usuarioInteresses);
+
+  } catch (error) {
+    console.error('Erro ao executar a função principal:', error);
+    sugestoesContainer.textContent = 'Erro ao buscar sugestões.';
+  } finally {
+    console.log("Finalizando a função main, ocultando indicador de carregamento...");
+    toggleLoadingIndicator(loadingIndicator, false);
+  }
+}
+
+
+async function obterInteressesUsuario(uid) {
+  
+  console.log("Antes do main, UID onterInteresseUsuario:", uid);
+  if (!uid) {
+    throw new Error("UID não pode ser vazio.");
+  }
+
+  
+  if (!uid) {async function obterInteressesUsuario(uid) {
+  
+    console.log("Antes do main, UID onterInteresseUsuario:", uid);
+    
+    if (!uid) {
+      throw new Error("UID não pode ser vazio.");
+    }
+  
+    try {
+      // Usando a função collection e doc para acessar o documento do usuário
+      const usuarioDoc = await getDoc(doc(collection(db, 'users'), uid));
+      console.log("Dados do documento do usuário:", usuarioDoc.data()); // Adicione esta linha
+      if (!usuarioDoc.exists()) {
+        throw new Error('Usuário não encontrado.');
+      }
+  
+      const usuarioData = usuarioDoc.data();
+      
+      // Log dos dados do usuário
+      console.log('Dados do usuário:', usuarioData);
+  
+      const interesses = usuarioData.interests || [];
+  
+      if (!Array.isArray(interesses)) {
+        console.error("Interesses do usuário não estão no formato esperado.");
+        return [];
+      }
+  
+      return interesses; // Retorna os interesses
+    } catch (error) {
+      console.error('Erro ao obter interesses do usuário:', error);
+      throw error; // Propagar o erro
+    }
+  }
+  
+    throw new Error("UID não pode ser vazio.");
+  }
+
+  try {
+    // Usando a função collection e doc para acessar o documento do usuário
+    const usuarioDoc = await getDoc(doc(collection(db, 'users'), uid));
+
+    if (!usuarioDoc.exists()) {
+      throw new Error('Usuário não encontrado.');
+    }
+
+    const usuarioData = usuarioDoc.data();
+    const interesses = usuarioData.interests || [];
+
+    if (!Array.isArray(interesses)) {
+      console.error("Interesses do usuário não estão no formato esperado.");
+      return [];
+    }
+
+    return interesses; // Retorna os interesses
+  } catch (error) {
+    console.error('Erro ao obter interesses do usuário:', error);
+    throw error; // Propagar o erro
+  }
+}
+
+
+
+function toggleLoadingIndicator(loadingIndicator, isLoading) {
+  if (loadingIndicator) {
+      loadingIndicator.style.display = isLoading ? 'block' : 'none';
+  }
+}
+ 
+  
+
+function filtrarUsuarios(usuarios) {
+  
+  if (!Array.isArray(usuarios)) {
+      console.error("O parâmetro 'usuarios' deve ser um array.");
+      throw new Error("Parâmetro 'usuarios' inválido.");
+  }
+
+  console.log(`Total de usuários recebidos para filtragem: ${usuarios.length}`);
+
+  const usuariosFiltrados = usuarios.filter(usuario => {
+      const interesses = normalizarInteresses(usuario.interests);
+      
+      if (!interesses) {
+          console.warn(`Usuário ${usuario.uid} não possui interesses válidos.`);
+          return false; // Ignora este usuário
+      }
+
+      console.log(`Usuário ${usuario.uid} tem interesses:`, interesses);
+      
+      if (interesses.length < 2) {
+          console.warn(`Usuário ${usuario.uid} não possui interesses suficientes.`);
+          return false;
+      }
+      
+      return true; // Mantém o usuário na lista
+  });
+
+  console.log(`Total de usuários filtrados: ${usuariosFiltrados.length}`);
+
+  return usuariosFiltrados;
+}
+
+
+    
+function exibirSugestoes(indicesPrevistos, rotulosMap, usuarios, sugestoesContainer, usuarioInteresses) {
+  
+  console.log('Índices previstos antes de exibirSugestoes:', indicesPrevistos);
+
+  if (indicesPrevistos.length === 0) {
+    sugestoesContainer.textContent = 'Nenhuma sugestão disponível.';
+    console.log('Nenhuma sugestão disponível.');
+    return;
+  }
+
+  // Log para verificar todos os índices recebidos
+  console.log(`Índices recebidos: ${JSON.stringify(indicesPrevistos)}`);
+
+  // Filtra índices válidos (números não negativos)
+  const indicesValidos = indicesPrevistos.filter(index => typeof index === 'number' && index >= 0);
+
+  console.log(`Índices válidos: ${JSON.stringify(indicesValidos)}`);
+
+  if (indicesValidos.length === 0) {
+    sugestoesContainer.textContent = 'Nenhuma sugestão disponível após filtragem.';
+    console.log('Nenhuma sugestão disponível após filtragem.');
+    return;
+  }
+
+  
+
+  // Percorre os índices válidos
+  indicesValidos.forEach(index => {
+    console.log(`Verificando índice: ${index}`); // Log para ver o índice atual
+
+    const uid = rotulosMap[index];
+    console.log('Rótulos mapeados:', rotulosMap);
+
+    if (!uid) {
+      console.warn(`UID para índice ${index} é undefined no rotulosMap.`);
+      console.log('rotulosMap:', rotulosMap);
+      return;
+    }
+
+    const usuario = usuarios.find(u => u.uid === uid);
+    if (!usuario) {
+      console.warn(`Usuário com UID ${uid} não encontrado no array de usuários.`);
+      console.log('Usuários:', usuarios);
+      return;
+    }
+
+    const usuarioInterestsArray = normalizarInteresses(usuario.interests);
+    console.log(`Interesses do usuário ${usuario.fullname}:`, usuarioInterestsArray);
+
+    const interessesComunsUsuario = interessesComuns(usuarioInteresses, usuarioInterestsArray);
+    console.log(`Interesses comuns entre ${usuario.fullname} e o usuário:`, interessesComunsUsuario);
+
+    const div = criarSugestaoElemento(usuario.fullname, interessesComunsUsuario);
+    sugestoesContainer.appendChild(div);
+    console.log(`Sugestão exibida para: ${usuario.fullname}`);
+  });
+}
+// Função para normalizar interesses (remove espaços, converte para minúsculas e remove pontuação)
+function normalizarInteresse(interesse) {
+  if (typeof interesse !== 'string') {
+      console.error("O interesse deve ser uma string.");
+      throw new Error("Interesse inválido.");
+  }
+  return interesse.trim().toLowerCase().replace(/[.,]/g, '').replace(/\s+/g, '');
+}
+
+function normalizarInteresses(interests) {
+  if (Array.isArray(interests)) {
+      return interests.map(normalizarInteresse); // Usa a função normalizarInteresse
+  } else if (typeof interests === 'string') {
+      return interests.split(',').map(normalizarInteresse); // Usa a função normalizarInteresse
+  }
+  return null; // Indica que não há interesses válidos
+}
